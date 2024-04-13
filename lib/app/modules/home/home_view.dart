@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:yandexmusic/app/data/static/colors.dart';
+import 'package:yandexmusic/app/routes/app_pages.dart';
 
 import 'home_controller.dart';
 
@@ -61,6 +62,7 @@ class HomeView extends GetView<HomeController> {
                     color: AppColors.backMusic,
                     elevation: 0,
                     child: ListTile(
+                      onTap: () => Get.toNamed(Routes.MUSIC),
                       contentPadding: const EdgeInsets.only(left: 15,right: 0, bottom: 0),
                       leading: Container(
                         height: 30,
