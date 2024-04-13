@@ -7,4 +7,7 @@ abstract class AppColors {
   static const Color lightGray = Color.fromARGB(255, 113, 113, 113);
   static const Color white = Color.fromARGB(255, 255, 255, 255);
   static const Color black = Color.fromARGB(255, 0, 0, 0);
+  static const Color pink = Color.fromARGB(255, 242, 75, 116);
+  static const Color grayOnMusic = Color.fromARGB(255, 127, 127, 125);
+  static const Color grayOnMusicText = Color.fromARGB(255, 183, 183, 181);
 }

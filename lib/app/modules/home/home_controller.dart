@@ -1,22 +1,28 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:yandexmusic/app/modules/music/music_view.dart';
+import 'package:yandexmusic/app/routes/app_pages.dart';
 
 class HomeController extends GetxController {
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
+//   Route createRoute() {
+//   return PageRouteBuilder(
+//     pageBuilder: (context, animation, secondaryAnimation) => MusicView(),
+//     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+//       var begin = Offset(0.0, 1.0); // Откуда начинается анимация (снизу)
+//       var end = Offset.zero; // Куда перемещается страница (вверх)
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+//       var curve = Curves.easeInOutCubic; // Кривая анимации
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+//       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-  void increment() => count.value++;
+//       var offsetAnimation = animation.drive(tween);
+
+//       return SlideTransition(
+//         position: offsetAnimation,
+//         child: child,
+//       );
+//     },
+//   );
+// }
 }
