@@ -44,7 +44,7 @@ class HomeView extends GetView<HomeController> {
           Center(
             child: SizedBox(
               height: 55,
-              width: 350,
+              width: 340,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -175,7 +175,10 @@ class HomeView extends GetView<HomeController> {
                                 "hz",
                                 style: TextStyle(color: AppColors.lightGray),
                               ),
-                              trailing: const Icon(Icons.more_horiz, color: AppColors.lightGray,),
+                              trailing: const Icon(
+                                Icons.more_horiz,
+                                color: AppColors.lightGray,
+                              ),
                             ),
                           ),
                         );
@@ -187,7 +190,49 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
           ),
-          Container(height: 132,),
+          SizedBox(height: 35),
+          Padding(
+            padding:
+                const EdgeInsets.only(right: 16.0, left: 16.0, bottom: 2.0),
+            child: SizedBox(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Ещё у вас в Kоллекции',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 150,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.bottom,
+                        ),
+                      ),
+                      Container(
+                        width: 150,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.bottom,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
           Container(
             decoration: const BoxDecoration(
               color: AppColors.bottom,
