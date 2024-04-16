@@ -21,6 +21,7 @@ class AppPages {
       name: _Paths.MUSIC,
       page: () => const MusicView(),
       binding: MusicBinding(),
+      transition: Transition.downToUp,
     ),
   ];
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
+import 'package:yandexmusic/app/data/models/music_info/music_info.dart';
 
 class SoundPlayer extends GetxService {
   late AudioPlayer _player;
@@ -14,15 +15,16 @@ class SoundPlayer extends GetxService {
   Duration? get position => _position.value;
 
   String get positionText => _position.value?.toString().split(".").first ?? "0:00:00";
-  String get durationText => _position.value?.toString().split(".").first ?? "0:00:00";
+  String get durationText => _duration.value?.toString().split(".").first ?? "0:00:00";
 
-  bool get canResume => _playerState.value == PlayerState.paused || _playerState.value == PlayerState.stopped;
+  bool get isAvailable => _playerState.value == PlayerState.paused || _playerState.value == PlayerState.stopped;
+  bool get canResume => _playerState.value == PlayerState.paused || _playerState.value == PlayerState.playing;
   bool get canPause => _playerState.value == PlayerState.playing;
 
   @override
   void onInit() {
     super.onInit();
-
+    
     _player = AudioPlayer();
     _playerState = Rx<PlayerState?>(null);
     _duration = Rx<Duration?>(null);
@@ -52,12 +54,22 @@ class SoundPlayer extends GetxService {
     });
   }
 
-  Future<void> changeSource(String musicUrl) async {
-    await _player.setSource(UrlSource(musicUrl));
+  Future<void> changeMusic(MusicInfo info) async {
+    await _changeSource(info.url);
+  }
+
+  Future<void> _changeSource(String musicUrl) async {
+    await stop();
+    try {
+      await _player.setSource(UrlSource(musicUrl));
+    } on AudioPlayerException {
+      Get.snackbar("ОШИБКА", "Не удалось включить музыку");
+    }
     await _player.resume();
   }
 
   Future<void> resume() async {
+    if (!canResume) return;
     if (canPause) {
       pause();
     } else {
@@ -88,10 +100,7 @@ class SoundPlayer extends GetxService {
     _player.seek(Duration(milliseconds: position.round()));
   }
 
-  double get getSliderInfo => (_position.value != null &&
-          _duration.value != null &&
-          _position.value!.inMilliseconds > 0 &&
-          _position.value!.inMilliseconds < _duration.value!.inMilliseconds)
+  double get getSliderInfo => (_position.value != null && _duration.value != null && _position.value!.inMilliseconds > 0 && _position.value!.inMilliseconds < _duration.value!.inMilliseconds)
       ? _position.value!.inMilliseconds / _duration.value!.inMilliseconds
       : 0.0;
 }

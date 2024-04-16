@@ -1,26 +1,34 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:yandexmusic/app/data/services/music_player_service.dart';
 import 'package:yandexmusic/app/data/services/sound_player_service.dart';
 
 class MusicController extends GetxController {
   final _soundPlayer = Get.find<SoundPlayer>();
+  final _musicPlayer = Get.find<MusicPlayer>();
 
-  double get sliderValue => _soundPlayer.getSliderInfo;
+  late final PageController _musicImageController;
 
-  bool get canResume => _soundPlayer.canResume;
-  bool get canPause => _soundPlayer.canPause;
+  SoundPlayer get soundPlayer => _soundPlayer;
+  MusicPlayer get musicPlayer => _musicPlayer;
 
-  String get curPlayTime => _soundPlayer.positionText;
+  PageController get musicImgCtrl => _musicImageController;
 
-  Future<void> changeSource() async {
-    _soundPlayer.changeSource(
-        "https://t4.bcbits.com/stream/7cc981ead8a38906d363568c2f135b14/mp3-128/2473821881?p=0&ts=1713029753&t=45e3c3578d413eb5fcfcb59ce685dda624decf48&token=1713029753_6e4e052d87e24355c69d025f3800ec6918694d0d");
+  @override
+  void onInit() {
+    super.onInit();
+    _musicImageController = PageController(initialPage: _musicPlayer.curMusicId() ?? 0, keepPage: false, viewportFraction: 0.8);
   }
 
-  void changePlayTime(double playTime) => _soundPlayer.seek(playTime);
+  void changeMusicVisualy(bool isNext) {
+    int? index = _musicPlayer.curMusicId();
+    if (index == null) return;
 
-  Future<void> pause() async => _soundPlayer.pause();
+    isNext ? index++ : index--;
 
-  Future<void> play() async => _soundPlayer.play();
+    if (index > _musicPlayer.loadedMusic.length - 1) return;
+    if (index < 0) return;
 
-  Future<void> resume() async => _soundPlayer.resume();
+    _musicImageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+  }
 }
