@@ -13,6 +13,9 @@ class MusicPlayer extends GetxService {
 
   List<MusicInfo> get loadedMusic => _loadedMusic;
 
+ //для цвета
+  bool get isMusicLoaded => _curMusic.value != null;
+
   String? get curMusicImage => _curMusic.value?.imageUrl;
   String get curMusicAuthor => _curMusic.value?.author ?? "Или найдите новинку в плейлист";
   String get curMusicName => _curMusic.value?.name ?? "Выберите музыку";

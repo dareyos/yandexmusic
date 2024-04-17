@@ -9,19 +9,21 @@ class MusicView extends GetView<MusicController> {
   const MusicView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(),
-      backgroundColor: AppColors.grayOnMusic,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildMusicImage(),
-            _buildArtistRow(),
-            _buildMusicSlider(),
-            _buildActionButtons(),
-            _buildBottomButtons(),
-          ],
+    return Obx(
+      () => Scaffold(
+        appBar: _buildAppBar(),
+        backgroundColor: controller.bgColor,
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildMusicImage(),
+              _buildArtistRow(),
+              _buildMusicSlider(),
+              _buildActionButtons(),
+              _buildBottomButtons(),
+            ],
+          ),
         ),
       ),
     );
@@ -218,7 +220,7 @@ class MusicView extends GetView<MusicController> {
                 : PageView.builder(
                     itemCount: controller.musicPlayer.loadedMusic.length,
                     controller: controller.musicImgCtrl,
-                    onPageChanged: (index) => controller.musicPlayer.changePlayingMusicByIndex(index),
+                    onPageChanged: (index) => controller.changeMusic(index),
                     itemBuilder: (context, index) {
                       return ClipRRect(
                         borderRadius: BorderRadius.circular(10),
@@ -237,7 +239,7 @@ class MusicView extends GetView<MusicController> {
   AppBar _buildAppBar() {
     return AppBar(
       centerTitle: true,
-      backgroundColor: AppColors.grayOnMusic,
+      backgroundColor: controller.bgColor,
       title: Column(
         children: [
           const Text(

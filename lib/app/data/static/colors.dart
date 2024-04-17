@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:palette_generator/palette_generator.dart';
 
 abstract class AppColors {
   static const Color header = Color.fromARGB(255, 250, 250, 250);
@@ -10,4 +13,15 @@ abstract class AppColors {
   static const Color pink = Color.fromARGB(255, 242, 75, 116);
   static const Color grayOnMusic = Color.fromARGB(255, 127, 127, 125);
   static const Color grayOnMusicText = Color.fromARGB(255, 183, 183, 181);
+}
+
+abstract class ColorManager {
+  static Future<Color> getDominantColorFromImage(Image image) async {
+    try {
+      final PaletteGenerator paletteGenerator = await PaletteGenerator.fromImageProvider(image.image);
+      return paletteGenerator.dominantColor?.color ?? AppColors.grayOnMusic;
+    } on TimeoutException {
+      return AppColors.grayOnMusic;
+    }
+  }
 }
